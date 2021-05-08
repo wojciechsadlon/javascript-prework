@@ -1,20 +1,22 @@
 let paper = 'papier';
 let rock = 'kamień';
 let scissors = 'nożyczki';
+let playerResult = 0;
+let computerResult = 0;
 
-function printMessage(msg){
+function printMessage(message){
 	let div = document.createElement('div');
-	div.innerHTML = msg;
+	div.innerHTML = message;
 	document.getElementById('messages').appendChild(div);
 }
 
-function printResult(resultAi,resultMe){
-	let div = document.createElement('div');
-	let h2 = document.createElement('h3');
-	div.innerHTML = 'CPU ' + resultAi + ' - ' + resultMe + ' TY';
-	h2.innerHTML = 'WYNIK GRY';
-	document.getElementById('result').appendChild(h2);
-	document.getElementById('result').appendChild(div);
+function printScore(computerResult, playerResult){
+	let resultsWrapper = document.createElement('div');
+	let resultsHeader = document.createElement('h3');
+	resultsWrapper.innerHTML = 'CPU ' + computerResult + ' - ' + playerResult + ' TY';
+	resultsHeader.innerHTML = 'WYNIK GRY';
+	document.getElementById('result').appendChild(resultsHeader);
+	document.getElementById('result').appendChild(resultsWrapper);
 }
 
 function clearMessages(){
@@ -24,7 +26,7 @@ function clearMessages(){
 
 function getMoveName(moveId){
 	if(moveId === 1){
-	return rock;
+		return rock;
 	} else if(moveId === 2){
 		return paper;
 	} else if(moveId === 3){
@@ -34,16 +36,21 @@ function getMoveName(moveId){
 	}
 }
 
-let resultMe = 0;
-let resultAi = 0;
-
-function displayResult(argComputerMove,argPlayerMove){
-	if(argComputerMove === rock && argPlayerMove === paper || argComputerMove === paper && argPlayerMove === scissors || argComputerMove === scissors && argPlayerMove === rock){
+function displayResult(argComputerMove, argPlayerMove){
+	if(
+		argComputerMove === rock && argPlayerMove === paper ||
+		argComputerMove === paper && argPlayerMove === scissors ||
+		argComputerMove === scissors && argPlayerMove === rock
+		){
 		printMessage('Ty wygrywasz!');
-		resultMe++;
-	} else if(argComputerMove === rock && argPlayerMove === scissors || argComputerMove === scissors && argPlayerMove === paper || argComputerMove === paper && argPlayerMove === rock){
+		playerResult++;
+	} else if(
+		argComputerMove === rock && argPlayerMove === scissors ||
+		argComputerMove === scissors && argPlayerMove === paper ||
+		argComputerMove === paper && argPlayerMove === rock
+		){
 		printMessage('Ty przegrywasz!');
-		resultAi++;
+		computerResult++;
 	} else if(argComputerMove === argPlayerMove){
 		printMessage('Jest remis!');
 	} else{
@@ -64,7 +71,7 @@ function playGame(playerInput){
 
     printMessage('Twój ruch to: ' + playerMove);
 
-    displayResult(computerMove,playerMove);
-	printResult(resultAi,resultMe);
+    displayResult(computerMove, playerMove);
+	printScore(computerResult, playerResult);
 }
 
