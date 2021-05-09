@@ -5,6 +5,7 @@ let playerResult = 0;
 let computerResult = 0;
 let gameWins = Number(prompt('Do ilu wygranych gramy?'));
 let gameCount = 0;
+let winCount = 0;
 
 function printMessage(message){
 	let div = document.createElement('div');
@@ -16,7 +17,7 @@ function printScore(computerResult, playerResult){
 	let resultsWrapper = document.createElement('div');
 	let resultsHeader = document.createElement('h3');
 	resultsWrapper.innerHTML = 'CPU ' + computerResult + ' - ' + playerResult + ' TY';
-	resultsHeader.innerHTML = 'WYNIK GRY';
+	resultsHeader.innerHTML = 'WYNIK GRY (do ' + gameWins + ' wygranych)';
 	document.getElementById('result').appendChild(resultsHeader);
 	document.getElementById('result').appendChild(resultsWrapper);
 }
@@ -33,6 +34,15 @@ function roundEnd(){
 
 	roundHeader.innerHTML = 'Gra zakończona ' + gameWins + ' zwycięstwami! ' + winner;
 	document.getElementById('result').appendChild(roundHeader);
+}
+
+function clearStats(){
+	clearMessages()
+	playerResult = 0;
+	computerResult = 0;
+	gameCount = 0;
+	winCount = 0;
+	gameWins = Number(prompt('Do ilu wygranych gramy?'));
 }
 
 function clearMessages(){
@@ -61,6 +71,7 @@ function displayResult(argComputerMove, argPlayerMove){
 		printMessage('Ty wygrywasz!');
 		playerResult++;
 		gameCount++;
+		winCount++;
 	} else if(
 		argComputerMove === rock && argPlayerMove === scissors ||
 		argComputerMove === scissors && argPlayerMove === paper ||
@@ -68,6 +79,7 @@ function displayResult(argComputerMove, argPlayerMove){
 	){
 		printMessage('Ty przegrywasz!');
 		computerResult++;
+		winCount++;
 		gameCount++;
 	} else if(argComputerMove === argPlayerMove){
 		printMessage('Jest remis!');
@@ -92,6 +104,10 @@ function playGame(playerInput){
 	
 	if(playerResult === gameWins || computerResult === gameWins){
 		roundEnd();
+	} 
+	
+	if(playerResult > gameWins || computerResult > gameWins){
+		clearStats();
 	}
 }
 
@@ -105,17 +121,17 @@ function playGame(playerInput){
 // 	let playerMove = getMoveName(playerInput);
 
 // 	if(
-// 		((computerResult / playCount) > 0.25) &&
+// 		((computerResult / gameCount) > 0.25) &&
 // 		(playerMove === rock)
 // 	){
 // 		computerMove = scissors;
 // 	} else if (
-// 		((computerResult / playCount) > 0.25) &&
+// 		((computerResult / gameCount) > 0.25) &&
 // 		(playerMove === paper)
 // 	){
 // 		computerMove = rock;
 // 	} else if (
-// 		((computerResult / playCount) > 0.25) &&
+// 		((computerResult / gameCount) > 0.25) &&
 // 		(playerMove === scissors)
 // 	){
 // 		computerMove = paper;
