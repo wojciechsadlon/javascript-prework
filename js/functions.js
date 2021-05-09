@@ -23,7 +23,15 @@ function printScore(computerResult, playerResult){
 
 function roundEnd(){
 	let roundHeader = document.createElement('h3');
-	roundHeader.innerHTML = 'Gra zakończona ' + gameWins + ' zwycięstwami!';
+	let winner = '';
+
+	if(playerResult === gameWins){
+		winner = 'Brawo! Wygrałeś!!!'
+	} else if(computerResult === gameWins){
+		winner = 'Przegrałeś, spróbuj ponownie!'
+	}
+
+	roundHeader.innerHTML = 'Gra zakończona ' + gameWins + ' zwycięstwami! ' + winner;
 	document.getElementById('result').appendChild(roundHeader);
 }
 

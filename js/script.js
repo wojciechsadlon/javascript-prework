@@ -1,4 +1,3 @@
-
 document.getElementById('play-rock').addEventListener('click', function(){
     playGame(1);
 });
