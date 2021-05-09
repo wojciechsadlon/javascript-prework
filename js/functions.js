@@ -3,6 +3,8 @@ let rock = 'kamień';
 let scissors = 'nożyczki';
 let playerResult = 0;
 let computerResult = 0;
+let gameWins = Number(prompt('Do ilu wygranych gramy?'));
+let gameCount = 0;
 
 function printMessage(message){
 	let div = document.createElement('div');
@@ -17,6 +19,12 @@ function printScore(computerResult, playerResult){
 	resultsHeader.innerHTML = 'WYNIK GRY';
 	document.getElementById('result').appendChild(resultsHeader);
 	document.getElementById('result').appendChild(resultsWrapper);
+}
+
+function roundEnd(){
+	let roundHeader = document.createElement('h3');
+	roundHeader.innerHTML = 'Gra zakończona ' + gameWins + ' zwycięstwami!';
+	document.getElementById('result').appendChild(roundHeader);
 }
 
 function clearMessages(){
@@ -41,18 +49,21 @@ function displayResult(argComputerMove, argPlayerMove){
 		argComputerMove === rock && argPlayerMove === paper ||
 		argComputerMove === paper && argPlayerMove === scissors ||
 		argComputerMove === scissors && argPlayerMove === rock
-		){
+	){
 		printMessage('Ty wygrywasz!');
 		playerResult++;
+		gameCount++;
 	} else if(
 		argComputerMove === rock && argPlayerMove === scissors ||
 		argComputerMove === scissors && argPlayerMove === paper ||
 		argComputerMove === paper && argPlayerMove === rock
-		){
+	){
 		printMessage('Ty przegrywasz!');
 		computerResult++;
+		gameCount++;
 	} else if(argComputerMove === argPlayerMove){
 		printMessage('Jest remis!');
+		gameCount++;
 	} else{
 		printMessage('Nie wybrałeś poprawnie swojego ruchu');
 	}
@@ -62,16 +73,51 @@ function playGame(playerInput){
     clearMessages();
 
     let randomNumber = Math.floor(Math.random() * 3 + 1);
-
     let computerMove = getMoveName(randomNumber);
+	let playerMove = getMoveName(playerInput);
 
     printMessage('Mój ruch to: ' + computerMove);
-
-    let playerMove = getMoveName(playerInput);
-
     printMessage('Twój ruch to: ' + playerMove);
 
     displayResult(computerMove, playerMove);
 	printScore(computerResult, playerResult);
+	
+	if(playerResult === gameWins || computerResult === gameWins){
+		roundEnd();
+	}
 }
+
+
+//	CHEAT
+// function playGame(playerInput){
+//     clearMessages();
+
+//     let randomNumber = Math.floor(Math.random() * 3 + 1);
+//     let computerMove = getMoveName(randomNumber);
+// 	let playerMove = getMoveName(playerInput);
+
+// 	if(
+// 		((computerResult / playCount) > 0.25) &&
+// 		(playerMove === rock)
+// 	){
+// 		computerMove = scissors;
+// 	} else if (
+// 		((computerResult / playCount) > 0.25) &&
+// 		(playerMove === paper)
+// 	){
+// 		computerMove = rock;
+// 	} else if (
+// 		((computerResult / playCount) > 0.25) &&
+// 		(playerMove === scissors)
+// 	){
+// 		computerMove = paper;
+// 	}
+
+
+//     printMessage('Mój ruch to: ' + computerMove);
+//     printMessage('Twój ruch to: ' + playerMove);
+
+//     displayResult(computerMove, playerMove);
+// 	printScore(computerResult, playerResult);
+// }
 
