@@ -1,19 +1,20 @@
-let paper = 'papier';
-let rock = 'kamień';
-let scissors = 'nożyczki';
+{
+const paper = 'papier';
+const rock = 'kamień';
+const scissors = 'nożyczki';
 let playerResult = 0;
 let computerResult = 0;
 let gameWins = Number(prompt('Do ilu wygranych gramy?'));
 let gameCount = 0;
 let winCount = 0;
 
-function printMessage(message){
+const printMessage = function(message){
 	let div = document.createElement('div');
 	div.innerHTML = message;
 	document.getElementById('messages').appendChild(div);
 }
 
-function printScore(computerResult, playerResult){
+const printScore = function(computerResult, playerResult){
 	let resultsWrapper = document.createElement('div');
 	let resultsHeader = document.createElement('h3');
 	resultsWrapper.innerHTML = 'CPU ' + computerResult + ' - ' + playerResult + ' TY';
@@ -22,7 +23,7 @@ function printScore(computerResult, playerResult){
 	document.getElementById('result').appendChild(resultsWrapper);
 }
 
-function roundEnd(){
+const roundEnd = function(){
 	let roundHeader = document.createElement('h3');
 	let winner = '';
 
@@ -36,7 +37,7 @@ function roundEnd(){
 	document.getElementById('result').appendChild(roundHeader);
 }
 
-function clearStats(){
+const clearStats = function(){
 	clearMessages()
 	playerResult = 0;
 	computerResult = 0;
@@ -45,12 +46,12 @@ function clearStats(){
 	gameWins = Number(prompt('Do ilu wygranych gramy?'));
 }
 
-function clearMessages(){
+const clearMessages = function(){
 	document.getElementById('messages').innerHTML = '';
 	document.getElementById('result').innerHTML = '';
 } 
 
-function getMoveName(moveId){
+const getMoveName = function(moveId){
 	if(moveId === 1){
 		return rock;
 	} else if(moveId === 2){
@@ -62,7 +63,7 @@ function getMoveName(moveId){
 	}
 }
 
-function displayResult(argComputerMove, argPlayerMove){
+const displayResult = function(argComputerMove, argPlayerMove){
 	if(
 		argComputerMove === rock && argPlayerMove === paper ||
 		argComputerMove === paper && argPlayerMove === scissors ||
@@ -70,8 +71,8 @@ function displayResult(argComputerMove, argPlayerMove){
 	){
 		printMessage('Ty wygrywasz!');
 		playerResult++;
-		gameCount++;
 		winCount++;
+		gameCount++;
 	} else if(
 		argComputerMove === rock && argPlayerMove === scissors ||
 		argComputerMove === scissors && argPlayerMove === paper ||
@@ -89,7 +90,7 @@ function displayResult(argComputerMove, argPlayerMove){
 	}
 }
 
-function playGame(playerInput){
+const playGame = function(playerInput){
     clearMessages();
 
     let randomNumber = Math.floor(Math.random() * 3 + 1);
@@ -105,10 +106,11 @@ function playGame(playerInput){
 	if(playerResult === gameWins || computerResult === gameWins){
 		roundEnd();
 	} 
-	
+
 	if(playerResult > gameWins || computerResult > gameWins){
 		clearStats();
 	}
+}
 }
 
 
@@ -145,3 +147,12 @@ function playGame(playerInput){
 // 	printScore(computerResult, playerResult);
 // }
 
+//ZMIANA BUTTONOW NA JEDEN RESTARTUJACY
+
+// document.getElementById('buttons').innerHTML = '';
+// let button = document.createElement('button');
+// button.innerHTML = 'RESTART GRY';
+// document.getElementById('buttons').appendChild(button);
+// document.getElementById('buttons').addEventListener('click', function(){
+// 	clearStats();
+// })
