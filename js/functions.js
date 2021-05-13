@@ -11,14 +11,14 @@ let roundFlague = false;
 let roundCount = 0;
 
 const printMessage = function(message){
-	let div = document.createElement('div');
+	const div = document.createElement('div');
 	div.innerHTML = message;
 	document.getElementById('messages').appendChild(div);
 }
 
 const printScore = function(computerResult, playerResult){
-	let resultsWrapper = document.createElement('div');
-	let resultsHeader = document.createElement('h3');
+	const resultsWrapper = document.createElement('div');
+	const resultsHeader = document.createElement('h3');
 	resultsWrapper.innerHTML = 'CPU ' + computerResult + ' - ' + playerResult + ' TY';
 	resultsHeader.innerHTML = 'WYNIK GRY (do ' + gameWins + ' wygranych)';
 	document.getElementById('result').appendChild(resultsHeader);
@@ -26,7 +26,7 @@ const printScore = function(computerResult, playerResult){
 }
 
 const roundEnd = function(){
-	let roundHeader = document.createElement('h3');
+	const roundHeader = document.createElement('h3');
 	let winner = '';
 
 	if(playerResult === gameWins){
