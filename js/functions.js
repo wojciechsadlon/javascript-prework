@@ -1,4 +1,4 @@
-{
+
 const paper = 'papier';
 const rock = 'kamień';
 const scissors = 'nożyczki';
@@ -7,6 +7,8 @@ let computerResult = 0;
 let gameWins = Number(prompt('Do ilu wygranych gramy?'));
 let gameCount = 0;
 let winCount = 0;
+let roundFlague = false;
+let roundCount = 0;
 
 const printMessage = function(message){
 	let div = document.createElement('div');
@@ -35,6 +37,8 @@ const roundEnd = function(){
 
 	roundHeader.innerHTML = 'Gra zakończona ' + gameWins + ' zwycięstwami! ' + winner;
 	document.getElementById('result').appendChild(roundHeader);
+
+	roundFlague = true;
 }
 
 const clearStats = function(){
@@ -105,13 +109,16 @@ const playGame = function(playerInput){
 	
 	if(playerResult === gameWins || computerResult === gameWins){
 		roundEnd();
-	} 
-
-	if(playerResult > gameWins || computerResult > gameWins){
+		gameWins = -1;
+		roundCount = gameCount;
+	}
+	
+	if(roundFlague === true && gameCount > roundCount){
 		clearStats();
 	}
+
 }
-}
+
 
 
 //	CHEAT
@@ -156,3 +163,6 @@ const playGame = function(playerInput){
 // document.getElementById('buttons').addEventListener('click', function(){
 // 	clearStats();
 // })
+
+
+//playerResult > gameWins || computerResult > gameWins
