@@ -1,14 +1,14 @@
-
+{
 const paper = 'papier';
 const rock = 'kamień';
 const scissors = 'nożyczki';
 let playerResult = 0;
 let computerResult = 0;
-let gameWins = Number(prompt('Do ilu wygranych gramy?'));
+let howManyWins = Number(prompt('Do ilu wygranych gramy?'));
 let gameCount = 0;
 let winCount = 0;
 let roundFlague = false;
-let roundCount = 0;
+let endGameCount = 0;
 
 const printMessage = function(message){
 	const div = document.createElement('div');
@@ -20,22 +20,22 @@ const printScore = function(computerResult, playerResult){
 	const resultsWrapper = document.createElement('div');
 	const resultsHeader = document.createElement('h3');
 	resultsWrapper.innerHTML = 'CPU ' + computerResult + ' - ' + playerResult + ' TY';
-	resultsHeader.innerHTML = 'WYNIK GRY (do ' + gameWins + ' wygranych)';
+	resultsHeader.innerHTML = 'WYNIK GRY (do ' + howManyWins + ' wygranych)';
 	document.getElementById('result').appendChild(resultsHeader);
 	document.getElementById('result').appendChild(resultsWrapper);
 }
 
 const roundEnd = function(){
 	const roundHeader = document.createElement('h3');
-	let winner = '';
+	let roundEndText = '';
 
-	if(playerResult === gameWins){
-		winner = 'Brawo! Wygrałeś!!!'
-	} else if(computerResult === gameWins){
-		winner = 'Przegrałeś, spróbuj ponownie!'
+	if(playerResult === howManyWins){
+		roundEndText = 'Brawo! Wygrałeś!!!'
+	} else if(computerResult === howManyWins){
+		roundEndText = 'Przegrałeś, spróbuj ponownie!'
 	}
 
-	roundHeader.innerHTML = 'Gra zakończona ' + gameWins + ' zwycięstwami! ' + winner;
+	roundHeader.innerHTML = 'Gra zakończona ' + howManyWins + ' zwycięstwami! ' + roundEndText;
 	document.getElementById('result').appendChild(roundHeader);
 
 	roundFlague = true;
@@ -47,7 +47,7 @@ const clearStats = function(){
 	computerResult = 0;
 	gameCount = 0;
 	winCount = 0;
-	gameWins = Number(prompt('Do ilu wygranych gramy?'));
+	howManyWins = Number(prompt('Do ilu wygranych gramy?'));
 }
 
 const clearMessages = function(){
@@ -94,12 +94,12 @@ const displayResult = function(argComputerMove, argPlayerMove){
 	}
 }
 
-const playGame = function(playerInput){
+var playGame = function(playerInput){
     clearMessages();
 
-    let randomNumber = Math.floor(Math.random() * 3 + 1);
-    let computerMove = getMoveName(randomNumber);
-	let playerMove = getMoveName(playerInput);
+    const randomNumber = Math.floor(Math.random() * 3 + 1);
+    const computerMove = getMoveName(randomNumber);
+	const playerMove = getMoveName(playerInput);
 
     printMessage('Mój ruch to: ' + computerMove);
     printMessage('Twój ruch to: ' + playerMove);
@@ -107,16 +107,17 @@ const playGame = function(playerInput){
     displayResult(computerMove, playerMove);
 	printScore(computerResult, playerResult);
 	
-	if(playerResult === gameWins || computerResult === gameWins){
+	if(playerResult === howManyWins || computerResult === howManyWins){
 		roundEnd();
-		gameWins = -1;
-		roundCount = gameCount;
+		howManyWins = -1;
+		endGameCount = gameCount;
 	}
 	
-	if(roundFlague === true && gameCount > roundCount){
+	if(roundFlague && gameCount > endGameCount){
 		clearStats();
 	}
 
+}
 }
 
 
@@ -165,4 +166,4 @@ const playGame = function(playerInput){
 // })
 
 
-//playerResult > gameWins || computerResult > gameWins
+//playerResult > howManyWins || computerResult > howManyWins
