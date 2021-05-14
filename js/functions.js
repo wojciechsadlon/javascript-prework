@@ -5,10 +5,8 @@ const scissors = 'nożyczki';
 let playerResult = 0;
 let computerResult = 0;
 let howManyWins = Number(prompt('Do ilu wygranych gramy?'));
-let gameCount = 0;
 let winCount = 0;
-let roundFlague = false;
-let endGameCount = 0;
+let isGameFinished = false;
 
 const printMessage = function(message){
 	const div = document.createElement('div');
@@ -25,27 +23,27 @@ const printScore = function(computerResult, playerResult){
 	document.getElementById('result').appendChild(resultsWrapper);
 }
 
-const roundEnd = function(){
+const endRound = function(){
 	const roundHeader = document.createElement('h3');
-	let roundEndText = '';
+	let endRoundText = '';
 
 	if(playerResult === howManyWins){
-		roundEndText = 'Brawo! Wygrałeś!!!'
+		endRoundText = 'Brawo! Wygrałeś!!!'
 	} else if(computerResult === howManyWins){
-		roundEndText = 'Przegrałeś, spróbuj ponownie!'
+		endRoundText = 'Przegrałeś, spróbuj ponownie!'
 	}
 
-	roundHeader.innerHTML = 'Gra zakończona ' + howManyWins + ' zwycięstwami! ' + roundEndText;
+	roundHeader.innerHTML = 'Gra zakończona ' + howManyWins + ' zwycięstwami! ' + endRoundText;
 	document.getElementById('result').appendChild(roundHeader);
 
-	roundFlague = true;
+	isGameFinished = true;
+	howManyWins = null;
 }
 
-const clearStats = function(){
+const resetGame = function(){
 	clearMessages()
 	playerResult = 0;
 	computerResult = 0;
-	gameCount = 0;
 	winCount = 0;
 	howManyWins = Number(prompt('Do ilu wygranych gramy?'));
 }
@@ -67,6 +65,16 @@ const getMoveName = function(moveId){
 	}
 }
 
+const saveScore = function(winner){
+	if(winner === 1){
+		playerResult++;
+		winCount++;
+	} else{
+		computerResult++;
+		winCount++;
+	}
+}
+
 const displayResult = function(argComputerMove, argPlayerMove){
 	if(
 		argComputerMove === rock && argPlayerMove === paper ||
@@ -74,21 +82,16 @@ const displayResult = function(argComputerMove, argPlayerMove){
 		argComputerMove === scissors && argPlayerMove === rock
 	){
 		printMessage('Ty wygrywasz!');
-		playerResult++;
-		winCount++;
-		gameCount++;
+		saveScore(1);
 	} else if(
 		argComputerMove === rock && argPlayerMove === scissors ||
 		argComputerMove === scissors && argPlayerMove === paper ||
 		argComputerMove === paper && argPlayerMove === rock
 	){
 		printMessage('Ty przegrywasz!');
-		computerResult++;
-		winCount++;
-		gameCount++;
+		saveScore(0);
 	} else if(argComputerMove === argPlayerMove){
 		printMessage('Jest remis!');
-		gameCount++;
 	} else{
 		printMessage('Nie wybrałeś poprawnie swojego ruchu');
 	}
@@ -106,17 +109,15 @@ var playGame = function(playerInput){
 
     displayResult(computerMove, playerMove);
 	printScore(computerResult, playerResult);
+
+		
+	if(isGameFinished && !howManyWins){
+		resetGame();
+	}
 	
 	if(playerResult === howManyWins || computerResult === howManyWins){
-		roundEnd();
-		howManyWins = -1;
-		endGameCount = gameCount;
+		endRound();
 	}
-	
-	if(roundFlague && gameCount > endGameCount){
-		clearStats();
-	}
-
 }
 }
 
